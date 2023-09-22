@@ -10,7 +10,9 @@
 		3EDF15C82ABDED3D009C696D /* ComplexNumbers.docc in Sources */ = {isa = PBXBuildFile; fileRef = 3EDF15C72ABDED3D009C696D /* ComplexNumbers.docc */; };
 		3EDF15CE2ABDED3D009C696D /* ComplexNumbers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDF15C32ABDED3D009C696D /* ComplexNumbers.framework */; };
 		3EDF15D32ABDED3D009C696D /* ComplexNumbersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDF15D22ABDED3D009C696D /* ComplexNumbersTests.swift */; };
-		3EDF15D42ABDED3D009C696D /* ComplexNumbers.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDF15C62ABDED3D009C696D /* ComplexNumbers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3EDF15D42ABDED3D009C696D /* ComplexNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDF15C62ABDED3D009C696D /* ComplexNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3EDF15DE2ABDED90009C696D /* ComplexNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDF15DD2ABDED90009C696D /* ComplexNumber.swift */; };
+		3EDF15DF2ABDED90009C696D /* ComplexNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDF15DD2ABDED90009C696D /* ComplexNumber.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,10 +27,11 @@
 
 /* Begin PBXFileReference section */
 		3EDF15C32ABDED3D009C696D /* ComplexNumbers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ComplexNumbers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3EDF15C62ABDED3D009C696D /* ComplexNumbers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComplexNumbers.h; sourceTree = "<group>"; };
+		3EDF15C62ABDED3D009C696D /* ComplexNumber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComplexNumber.h; sourceTree = "<group>"; };
 		3EDF15C72ABDED3D009C696D /* ComplexNumbers.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ComplexNumbers.docc; sourceTree = "<group>"; };
 		3EDF15CD2ABDED3D009C696D /* ComplexNumbersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComplexNumbersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EDF15D22ABDED3D009C696D /* ComplexNumbersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexNumbersTests.swift; sourceTree = "<group>"; };
+		3EDF15DD2ABDED90009C696D /* ComplexNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexNumber.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +74,9 @@
 		3EDF15C52ABDED3D009C696D /* ComplexNumbers */ = {
 			isa = PBXGroup;
 			children = (
-				3EDF15C62ABDED3D009C696D /* ComplexNumbers.h */,
+				3EDF15C62ABDED3D009C696D /* ComplexNumber.h */,
 				3EDF15C72ABDED3D009C696D /* ComplexNumbers.docc */,
+				3EDF15DD2ABDED90009C696D /* ComplexNumber.swift */,
 			);
 			path = ComplexNumbers;
 			sourceTree = "<group>";
@@ -92,7 +96,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EDF15D42ABDED3D009C696D /* ComplexNumbers.h in Headers */,
+				3EDF15D42ABDED3D009C696D /* ComplexNumber.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EDF15C82ABDED3D009C696D /* ComplexNumbers.docc in Sources */,
+				3EDF15DE2ABDED90009C696D /* ComplexNumber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EDF15D32ABDED3D009C696D /* ComplexNumbersTests.swift in Sources */,
+				3EDF15DF2ABDED90009C696D /* ComplexNumber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +422,7 @@
 		3EDF15DB2ABDED3D009C696D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 69RV8YV62P;
@@ -436,6 +443,7 @@
 		3EDF15DC2ABDED3D009C696D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 69RV8YV62P;
