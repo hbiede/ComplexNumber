@@ -9,39 +9,65 @@ import Foundation
 
 struct ComplexNumber {
 
-    private var a, b: Double
+    var a: Double
+    var b: Double
 
-    init(_ a: some FloatingPoint, _ b: some FloatingPoint) {
-        self.a = Double(a)
-        self.b = Double(b)
+    init(_ a: Double, _ b: Double) {
+        self.a = a
+        self.b = b
     }
-    init?(exactly source: BinaryInteger) {
+
+    init?<T>(exactly source: T) where T : BinaryInteger {
         a = Double(source)
         b = 0
     }
 
-    func conjugate() -> ComplexNumber {
-        ComplexNumber(a: self.a, b: -1 * self.b)
+    var conjugate: ComplexNumber {
+        ComplexNumber(self.a, -1 * self.b)
+    }
+
+    var i: ComplexNumber {
+        ComplexNumber(0, b)
     }
 }
 
 extension ComplexNumber: CustomStringConvertible {
     var description: String {
-        if b == .zero {
-            return "\(a)"
-        } else if a == .zero {
-            return "\(b)i"
-        } else if b > 0 {
-            return "\(a) + \(b)i"
-        } else {
-            return "\(a) - \(abs(b))i"
+        switch (a, b) {
+        case (_, .zero):
+            "\(a)"
+        case (.zero, _):
+            "\(b)i"
+        case (_, 0..<Double.infinity):
+            "\(a) + \(b)i"
+        default:
+            "\(a) - \(abs(b))i"
         }
     }
 }
 
 extension ComplexNumber: Equatable {
     static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.a == rhs.a && lhs.b == rhs.b
+        lhs.a == rhs.a && lhs.b == rhs.b
+    }
+}
+
+extension ComplexNumber: Numeric {
+    typealias Magnitude = Double
+    var magnitude: Double {
+        sqrt(pow(a, 2) + pow(b, 2))
+    }
+
+    static func * (lhs: Self, rhs: Self) -> Self {
+        ComplexNumber(
+            lhs.a * rhs.a - (lhs.b * rhs.b),
+            lhs.a * rhs.b + lhs.b * rhs.a
+        )
+    }
+    static func *= (lhs: inout Self, rhs: Self) {
+        let origA = lhs.a
+        lhs.a = lhs.a * rhs.a - (lhs.b * rhs.b)
+        lhs.b = origA * rhs.b + lhs.b * rhs.a
     }
 }
 
@@ -61,62 +87,43 @@ extension ComplexNumber: ExpressibleByFloatLiteral {
     }
 }
 
-extension ComplexNumber: AdditiveArithmetic, SignedNumeric {
-    typealias Magnitude = Double
-    var magnitude: Double {
-        get {
-            sqrt(pow(a, 2) + pow(b, 2))
-        }
+extension ComplexNumber: AdditiveArithmetic {
+    static func + (lhs: Self, rhs: Self) -> Self {
+        ComplexNumber(lhs.a + rhs.a, lhs.b + rhs.b)
     }
-
-    mutating func negate() {
-        self.a.negate()
-        self.b.negate()
-    }
-
-    static func + (lhs: ComplexNumber, rhs: ComplexNumber) -> ComplexNumber {
-        ComplexNumber(a: lhs.a + rhs.a, b: lhs.b + rhs.b)
-    }
-    static func += (lhs: inout ComplexNumber, rhs: ComplexNumber) {
+    static func += (lhs: inout Self, rhs: Self) {
         lhs.a += rhs.a
         lhs.b += rhs.b
     }
 
-    static func - (lhs: ComplexNumber, rhs: ComplexNumber) -> ComplexNumber {
-        ComplexNumber(a: lhs.a - rhs.a, b: lhs.b - rhs.b)
+    static func - (lhs: Self, rhs: Self) -> Self {
+        ComplexNumber(lhs.a - rhs.a, lhs.b - rhs.b)
     }
-    static func -= (lhs: inout ComplexNumber, rhs: ComplexNumber) {
+    static func -= (lhs: inout Self, rhs: Self) {
         lhs.a -= rhs.a
         lhs.b -= rhs.b
     }
 
-    static func * (lhs: ComplexNumber, rhs: ComplexNumber) -> ComplexNumber {
+    static func / (lhs: Self, rhs: Self) -> Self {
         ComplexNumber(
-            a: lhs.a * rhs.a - (lhs.b * rhs.b),
-            b: lhs.a * rhs.b + lhs.b * rhs.a
+            (lhs.a * rhs.a + lhs.b * rhs.b) / (pow(rhs.a, 2) + pow(rhs.b, 2)),
+            (lhs.b * rhs.a - lhs.a * rhs.b) / (pow(rhs.a, 2) + pow(rhs.b, 2))
         )
     }
-    static func *= (lhs: inout ComplexNumber, rhs: ComplexNumber) {
-        let origA = lhs.a
-        lhs.a = lhs.a * rhs.a - (lhs.b * rhs.b)
-        lhs.b = origA * rhs.b + lhs.b * rhs.a
-    }
-
-    static func / (lhs: ComplexNumber, rhs: ComplexNumber) -> ComplexNumber {
-        ComplexNumber(
-            a: (lhs.a * rhs.a + lhs.b * rhs.b) / (pow(rhs.a, 2) + pow(rhs.b, 2)),
-            b: (lhs.b * rhs.a - lhs.a * rhs.b) / (pow(rhs.a, 2) + pow(rhs.b, 2))
-        )
-    }
-    static func /= (lhs: inout ComplexNumber, rhs: ComplexNumber) {
+    static func /= (lhs: inout Self, rhs: Self) {
         let origA = lhs.a
         lhs.a = (lhs.a * rhs.a + lhs.b * rhs.b) / (pow(rhs.a, 2) + pow(rhs.b, 2))
         lhs.b = (lhs.b * rhs.a - origA * rhs.b) / (pow(rhs.a, 2) + pow(rhs.b, 2))
     }
 }
 
-extension FloatingPoint {
-    var i: ComplexNumber {
-        ComplexNumber(0, self)
+extension ComplexNumber: SignedNumeric {
+    prefix static func - (operand: Self) -> Self {
+        ComplexNumber(-operand.a, -operand.b)
+    }
+
+    mutating func negate() {
+        self.a.negate()
+        self.b.negate()
     }
 }
